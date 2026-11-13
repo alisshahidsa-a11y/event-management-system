@@ -437,7 +437,7 @@ void displayInventory(struct Inventory inventory[], int inventoryCount)
         // Loop through all stored inventory items
         for (int i = 0; i < inventoryCount; i++)
         {
-            printf("\n-----------------------------\n");
+            printf("\n-----------record %d------------------\n",i+1);
 
             // Display item information
             printf("Item ID: %d\n", inventory[i].itemID);
