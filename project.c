@@ -17,6 +17,14 @@ struct Client {
     char email[50];
     char address[100];
 };
+// Structure to store inventory item information
+struct Inventory {
+    int itemID;             // Unique ID of each item
+    char itemName[50];      // Name of the item
+    char category[30];      // Category of the item
+    int quantity;           // Available quantity
+    float price;            // Price per item
+};
 
 void addEvent(struct Event events[], int *count) {
 
@@ -385,6 +393,181 @@ void deleteClient(struct Client clients[], int *clientCount)
         printf("\nClient not found!\n");
     }
 }
+        //DOMAIN NO:3
+
+// Function to add a new inventory item
+void addInventory(struct Inventory inventory[], int *inventoryCount)
+{
+    // Take Item ID from the user
+    printf("\nEnter Item ID: ");
+    scanf("%d", &inventory[*inventoryCount].itemID);
+
+    // Take Item Name (including spaces)
+    printf("Enter Item Name: ");
+    scanf(" %49[^\n]", inventory[*inventoryCount].itemName);
+
+    // Take Item Category
+    printf("Enter Category: ");
+    scanf(" %29[^\n]", inventory[*inventoryCount].category);
+
+    // Take Available Quantity
+    printf("Enter Quantity: ");
+    scanf("%d", &inventory[*inventoryCount].quantity);
+
+    // Take Price of one item
+    printf("Enter Price: ");
+    scanf("%f", &inventory[*inventoryCount].price);
+
+    // Increase inventory counter by one
+    (*inventoryCount)++;
+
+    // Display success message
+    printf("\nInventory Item Added Successfully!\n");
+}
+// Function to display all inventory items
+void displayInventory(struct Inventory inventory[], int inventoryCount)
+{
+    // Check whether inventory is empty
+    if (inventoryCount == 0)
+    {
+        printf("\nNo inventory items available!\n");
+    }
+    else
+    {
+        // Loop through all stored inventory items
+        for (int i = 0; i < inventoryCount; i++)
+        {
+            printf("\n-----------------------------\n");
+
+            // Display item information
+            printf("Item ID: %d\n", inventory[i].itemID);
+            printf("Item Name: %s\n", inventory[i].itemName);
+            printf("Category: %s\n", inventory[i].category);
+            printf("Quantity: %d\n", inventory[i].quantity);
+            printf("Price: %.2f\n", inventory[i].price);
+        }
+    }
+}
+// Function to search for an inventory item using Item ID
+void searchInventory(struct Inventory inventory[], int inventoryCount)
+{
+    int searchID;
+    int found = 0;  // Flag to check whether item exists
+
+    // Ask the user for the Item ID
+    printf("\nEnter Item ID to search: ");
+    scanf("%d", &searchID);
+
+    // Search through all inventory records
+    for (int i = 0; i < inventoryCount; i++)
+    {
+        // Compare entered ID with stored Item IDs
+        if (inventory[i].itemID == searchID)
+        {
+            // Display the matching item's details
+            printf("\nInventory Item Found!\n");
+            printf("Item ID: %d\n", inventory[i].itemID);
+            printf("Item Name: %s\n", inventory[i].itemName);
+            printf("Category: %s\n", inventory[i].category);
+            printf("Quantity: %d\n", inventory[i].quantity);
+            printf("Price: %.2f\n", inventory[i].price);
+
+            found = 1;  // Mark item as found
+            break;      // Stop searching
+        }
+    }
+
+    // Display message if item does not exist
+    if (found == 0)
+    {
+        printf("\nInventory Item Not Found!\n");
+    }
+}
+// Function to update an existing inventory item
+void updateInventory(struct Inventory inventory[], int inventoryCount)
+{
+    int updateID;
+    int found = 0;  // Flag to check whether item exists
+
+    // Ask for the Item ID to update
+    printf("\nEnter Item ID to update: ");
+    scanf("%d", &updateID);
+
+    // Search for the inventory item
+    for (int i = 0; i < inventoryCount; i++)
+    {
+        // Check whether entered ID matches
+        if (inventory[i].itemID == updateID)
+        {
+            printf("\nItem Found! Enter New Details:\n");
+
+            // Update item name
+            printf("Enter New Item Name: ");
+            scanf(" %49[^\n]", inventory[i].itemName);
+
+            // Update item category
+            printf("Enter New Category: ");
+            scanf(" %29[^\n]", inventory[i].category);
+
+            // Update available quantity
+            printf("Enter New Quantity: ");
+            scanf("%d", &inventory[i].quantity);
+
+            // Update item price
+            printf("Enter New Price: ");
+            scanf("%f", &inventory[i].price);
+
+            found = 1;  // Mark item as found
+
+            printf("\nInventory Item Updated Successfully!\n");
+            break;  // Stop searching
+        }
+    }
+
+    // Check whether item was not found
+    if (found == 0)
+    {
+        printf("\nInventory Item Not Found!\n");
+    }
+}
+// Function to delete an inventory item using Item ID
+void deleteInventory(struct Inventory inventory[], int *inventoryCount)
+{
+    int deleteID;
+    int found = 0;  // Flag to check whether item exists
+
+    // Ask the user for the Item ID to delete
+    printf("\nEnter Item ID to delete: ");
+    scanf("%d", &deleteID);
+
+    // Search through all inventory records
+    for (int i = 0; i < *inventoryCount; i++)
+    {
+        // Check whether entered ID matches
+        if (inventory[i].itemID == deleteID)
+        {
+            // Shift remaining records one position to the left
+            for (int j = i; j < *inventoryCount - 1; j++)
+            {
+                inventory[j] = inventory[j + 1];
+            }
+
+            // Decrease the original inventory counter
+            (*inventoryCount)--;
+
+            found = 1;  // Mark item as found
+
+            printf("\nInventory Item Deleted Successfully!\n");
+            break;  // Stop searching
+        }
+    }
+
+    // Display message if item does not exist
+    if (found == 0)
+    {
+        printf("\nInventory Item Not Found!\n");
+    }
+}
 
 
 
@@ -398,6 +581,8 @@ int main() {
     int count = 0;
     struct Client clients[100];
     int clientCount = 0;
+    struct Inventory inventory[100];
+    int inventoryCount = 0;
 
     int ch;
 
@@ -420,7 +605,13 @@ int main() {
         printf("8. Search Client\n");
         printf("9. Update Client\n");
         printf("10. Delete Client\n");
-        printf("11. Exit\n");
+        printf("\n--- INVENTORY MANAGEMENT ---\n");
+        printf("11. Add Inventory Item\n");
+        printf("12. Display All Inventory Items\n");
+        printf("13. Search Inventory Item\n");
+        printf("14. Update Inventory Item\n");
+        printf("15. Delete Inventory Item\n");
+        printf("16. Exit\n");
 
         printf("\nEnter your choice: ");
         scanf("%d", &ch);
@@ -469,8 +660,29 @@ int main() {
                 deleteClient(clients, &clientCount);
                 break;
 
-            //exit program
             case 11:
+                addInventory(inventory, &inventoryCount);
+                break;
+
+            case 12:
+                displayInventory(inventory, inventoryCount);
+                break;
+
+            case 13:
+                searchInventory(inventory, inventoryCount);
+                break;
+
+            case 14:
+                updateInventory(inventory, inventoryCount);
+                break;
+
+            case 15:
+                deleteInventory(inventory, &inventoryCount);
+                break;
+
+
+            //exit program
+            case 16:
             printf("\nThank you for using Event Management System!\n");
             return 0;
             
