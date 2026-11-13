@@ -24,13 +24,13 @@ void addEvent(struct Event events[], int *count) {
     scanf("%d", &events[*count].eventID);
 
     printf("Enter Event Name: ");
-    scanf("%49[^\n]", events[*count].eventName);
+    scanf(" %49[^\n]", events[*count].eventName);
 
-    printf("Enter Event Type: ");
-    scanf("%29[^\n]", events[*count].eventType);
+    printf(" Enter Event Type: ");
+    scanf(" %29[^\n]", events[*count].eventType);
 
     printf("Enter Event Date: ");
-    scanf("%19[^\n]", events[*count].eventDate);
+    scanf(" %19[^\n]", events[*count].eventDate);
 
     printf("Enter Client ID: ");
     scanf("%d", &events[*count].clientID);
