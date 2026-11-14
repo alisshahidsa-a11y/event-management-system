@@ -56,9 +56,26 @@ struct Payment {
 };
 
 void addEvent(struct Event events[], int *count) {
+    // Check whether the array is full
+    if (*count >= 100) {
+    printf("\nMaximum event limit reached!\n");
+    return;
+}
 
-    printf("\nEnter Event ID: ");
-    scanf("%d", &events[*count].eventID);
+    int newID;
+
+    printf("Enter Event ID: ");
+    scanf("%d", &newID);
+
+    // Check whether this ID already exists
+    for (int i = 0; i < *count; i++) {
+        if (events[i].eventID == newID) {
+            printf("\nThis Event ID already exists!\n");
+            return;
+        }
+    }
+
+    events[*count].eventID = newID;
 
     printf("Enter Event Name: ");
     scanf(" %49[^\n]", events[*count].eventName);
@@ -78,10 +95,18 @@ void addEvent(struct Event events[], int *count) {
     printf("Enter Guest Count: ");
     scanf("%d", &events[*count].guestCount);
 
+    if (events[*count].guestCount < 0) {
+        printf("\nGuest count cannot be negative!\n");
+        return;
+}
+
     printf("Enter Budget: ");
     scanf("%f", &events[*count].budget);
 
-    (*count)++;
+    if (events[*count].budget < 0) {
+        printf("\nBudget cannot be negative!\n");
+        return;
+}
 
     printf("\nEvent added successfully!\n");
 }
@@ -246,11 +271,26 @@ void deleteEvent(struct Event events[], int *count) {
     }
 }
 // Function to add a new client
-void addClient(struct Client clients[], int *clientCount)
-{
+void addClient(struct Client clients[], int *clientCount){
+    if (*clientCount >= 100) {
+    printf("\nMaximum client limit reached!\n");
+    return;
+}
     // Take Client ID from the user
+    int newID;
+
     printf("\nEnter Client ID: ");
-    scanf("%d", &clients[*clientCount].clientID);
+    scanf("%d", &newID);
+
+    // Check for duplicate Client ID
+    for (int i = 0; i < *clientCount; i++) {
+        if (clients[i].clientID == newID) {
+            printf("\nThis Client ID already exists!\n");
+            return;
+        }
+    }
+
+clients[*clientCount].clientID = newID;
 
     // Take Client Name (including spaces)
     printf("Enter Client Name: ");
@@ -427,9 +467,24 @@ void deleteClient(struct Client clients[], int *clientCount)
 // Function to add a new inventory item
 void addInventory(struct Inventory inventory[], int *inventoryCount)
 {
-    // Take Item ID from the user
-    printf("\nEnter Item ID: ");
-    scanf("%d", &inventory[*inventoryCount].itemID);
+    if (*inventoryCount >= 100) {
+    printf("\nMaximum inventory limit reached!\n");
+    return;
+}
+    int newID;
+
+    printf("Enter Item ID: ");
+    scanf("%d", &newID);
+
+    // Check for duplicate Item ID
+    for (int i = 0; i < *inventoryCount; i++) {
+        if (inventory[i].itemID == newID) {
+            printf("\nThis Item ID already exists!\n");
+            return;
+        }
+    }
+
+    inventory[*inventoryCount].itemID = newID;
 
     // Take Item Name (including spaces)
     printf("Enter Item Name: ");
@@ -443,9 +498,19 @@ void addInventory(struct Inventory inventory[], int *inventoryCount)
     printf("Enter Quantity: ");
     scanf("%d", &inventory[*inventoryCount].quantity);
 
+    if (inventory[*inventoryCount].quantity < 0) {
+        printf("\nQuantity cannot be negative!\n");
+        return;
+}
+
     // Take Price of one item
     printf("Enter Price: ");
     scanf("%f", &inventory[*inventoryCount].price);
+
+    if (inventory[*inventoryCount].price < 0) {
+        printf("\nPrice cannot be negative!\n");
+        return;
+}
 
     // Increase inventory counter by one
     (*inventoryCount)++;
@@ -602,9 +667,24 @@ void deleteInventory(struct Inventory inventory[], int *inventoryCount)
 // Function to add a new venue
 void addVenue(struct Venue venues[], int *venueCount)
 {
-    // Take Venue ID from the user
+    if (*venueCount >= 100) {
+    printf("\nMaximum venue limit reached!\n");
+    return;
+}
+    int newID;
+
     printf("\nEnter Venue ID: ");
-    scanf("%d", &venues[*venueCount].venueID);
+    scanf("%d", &newID);
+
+    // Check for duplicate Venue ID
+    for (int i = 0; i < *venueCount; i++) {
+        if (venues[i].venueID == newID) {
+            printf("\nThis Venue ID already exists!\n");
+            return;
+        }
+    }
+
+    venues[*venueCount].venueID = newID;
 
     // Take Venue Name (including spaces)
     printf("Enter Venue Name: ");
@@ -617,10 +697,20 @@ void addVenue(struct Venue venues[], int *venueCount)
     // Take maximum guest capacity
     printf("Enter Venue Capacity: ");
     scanf("%d", &venues[*venueCount].capacity);
+    
+    if (venues[*venueCount].capacity <= 0) 
+    {
+    printf("\nVenue capacity must be greater than zero!\n");
+    return;
+}
 
     // Take venue rental price
     printf("Enter Rental Price: ");
     scanf("%f", &venues[*venueCount].rentalPrice);
+    if (venues[*venueCount].rentalPrice < 0) {
+    printf("\nRental price cannot be negative!\n");
+    return;
+}
 
     // Take venue availability status
     printf("Enter Availability (Available/Booked): ");
@@ -801,10 +891,24 @@ void deleteVenue(struct Venue venues[], int *venueCount)
 // Function to add a new vendor
 void addVendor(struct Vendor vendors[], int *vendorCount)
 {
-    // Take Vendor ID
-    printf("\nEnter Vendor ID: ");
-    scanf("%d", &vendors[*vendorCount].vendorID);
+    if (*vendorCount >= 100) {
+    printf("\nMaximum vendor limit reached!\n");
+    return;
+}
+    int newID;
 
+    printf("\nEnter Vendor ID: ");
+    scanf("%d", &newID);
+
+    // Check for duplicate Vendor ID
+    for (int i = 0; i < *vendorCount; i++) {
+        if (vendors[i].vendorID == newID) {
+            printf("\nThis Vendor ID already exists!\n");
+            return;
+        }
+    }
+
+vendors[*vendorCount].vendorID = newID;
     // Take Vendor Name
     printf("Enter Vendor Name: ");
     scanf(" %49[^\n]", vendors[*vendorCount].vendorName);
@@ -824,6 +928,10 @@ void addVendor(struct Vendor vendors[], int *vendorCount)
     // Take Service Price
     printf("Enter Service Price: ");
     scanf("%f", &vendors[*vendorCount].servicePrice);
+    if (vendors[*vendorCount].servicePrice < 0) {
+    printf("\nService price cannot be negative!\n");
+    return;
+}
 
     // Increase vendor counter
     (*vendorCount)++;
@@ -979,10 +1087,25 @@ void deleteVendor(struct Vendor vendors[], int *vendorCount)
 // Function to add a new payment
 void addPayment(struct Payment payments[], int *paymentCount)
 {
-    // Take Payment ID
-    printf("\nEnter Payment ID: ");
-    scanf("%d", &payments[*paymentCount].paymentID);
+    if (*paymentCount >= 100) {
+    printf("\nMaximum payment limit reached!\n");
+    return;
+}
+    int newID;
 
+    printf("\nEnter Payment ID: ");
+    scanf("%d", &newID);
+
+    // Check for duplicate Payment ID
+    for (int i = 0; i < *paymentCount; i++) {
+        if (payments[i].paymentID == newID) {
+            printf("\nThis Payment ID already exists!\n");
+            return;
+        }
+    }
+
+    payments[*paymentCount].paymentID = newID;
+    
     // Take Event ID
     printf("Enter Event ID: ");
     scanf("%d", &payments[*paymentCount].eventID);
@@ -994,10 +1117,20 @@ void addPayment(struct Payment payments[], int *paymentCount)
     // Take Total Amount
     printf("Enter Total Amount: ");
     scanf("%f", &payments[*paymentCount].totalAmount);
+    if (payments[*paymentCount].totalAmount < 0) {
+    printf("\nTotal amount cannot be negative!\n");
+    return;
+}
 
     // Take Paid Amount
     printf("Enter Paid Amount: ");
     scanf("%f", &payments[*paymentCount].paidAmount);
+
+if (payments[*paymentCount].paidAmount < 0 ||
+    payments[*paymentCount].paidAmount > payments[*paymentCount].totalAmount) {
+    printf("\nInvalid paid amount!\n");
+    return;
+}
 
     // Take Payment Date
     printf("Enter Payment Date: ");
@@ -1160,6 +1293,315 @@ void deletePayment(struct Payment payments[], int *paymentCount)
         printf("\nPayment Not Found!\n");
     }
 }
+        // file handling 
+ // Function to save event records in a file
+void saveEvents(struct Event events[], int count)
+{
+    // Open file in binary write mode
+    FILE *file = fopen("events.dat", "wb");
+
+    // Check whether file opened successfully
+    if (file == NULL)
+    {
+        printf("\nError saving events!\n");
+        return;
+    }
+
+    // Save the total number of events
+    fwrite(&count, sizeof(int), 1, file);
+
+    // Save all event records
+    fwrite(events, sizeof(struct Event), count, file);
+
+    // Close the file
+    fclose(file);
+
+    printf("\nEvents Saved Successfully!\n");
+}
+
+// Function to load event records from a file
+void loadEvents(struct Event events[], int *count)
+{
+    // Open file in binary read mode
+    FILE *file = fopen("events.dat", "rb");
+
+    // Check whether file exists
+    if (file == NULL)
+    {
+        printf("\nNo previous event records found.\n");
+        return;
+    }
+
+    // Load the total number of events
+    fread(count, sizeof(int), 1, file);
+    if (*count < 0 || *count > 100) {
+    printf("\nInvalid event file data!\n");
+    *count = 0;
+    fclose(file);
+    return;
+}
+
+    // Load all event records
+    fread(events, sizeof(struct Event), *count, file);
+
+    // Close the file
+    fclose(file);
+
+    printf("\nEvents Loaded Successfully!\n");
+}
+
+// Function to save client records in a file
+void saveClients(struct Client clients[], int count)
+{
+    // Open file in binary write mode
+    FILE *file = fopen("clients.dat", "wb");
+
+    // Check whether file opened successfully
+    if (file == NULL)
+    {
+        printf("\nError saving clients!\n");
+        return;
+    }
+
+    // Save the total number of clients
+    fwrite(&count, sizeof(int), 1, file);
+
+    // Save all client records
+    fwrite(clients, sizeof(struct Client), count, file);
+
+    // Close the file
+    fclose(file);
+
+    printf("\nClients Saved Successfully!\n");
+}
+
+// Function to load client records
+void loadClients(struct Client clients[], int *count)
+{
+    FILE *file = fopen("clients.dat", "rb");
+
+    if (file == NULL)
+    {
+        printf("\nNo previous client records found.\n");
+        return;
+    }
+
+    // Load client count
+    fread(count, sizeof(int), 1, file);
+    if (*count < 0 || *count > 100) {
+    printf("\nInvalid client file data!\n");
+    *count = 0;
+    fclose(file);
+    return;
+}
+
+    // Load all client records
+    fread(clients, sizeof(struct Client), *count, file);
+
+    fclose(file);
+
+    printf("\nClients Loaded Successfully!\n");
+}
+
+// Function to save inventory records
+void saveInventory(struct Inventory inventory[], int count)
+{
+    FILE *file = fopen("inventory.dat", "wb");
+
+    if (file == NULL)
+    {
+        printf("\nError saving inventory!\n");
+        return;
+    }
+
+    // Save inventory count
+    fwrite(&count, sizeof(int), 1, file);
+
+    // Save all inventory records
+    fwrite(inventory, sizeof(struct Inventory), count, file);
+
+    fclose(file);
+
+    printf("\nInventory Saved Successfully!\n");
+}
+
+// Function to load inventory records
+void loadInventory(struct Inventory inventory[], int *count)
+{
+    FILE *file = fopen("inventory.dat", "rb");
+
+    if (file == NULL)
+    {
+        printf("\nNo previous inventory records found.\n");
+        return;
+    }
+
+    // Load inventory count
+    fread(count, sizeof(int), 1, file);
+    if (*count < 0 || *count > 100) {
+    printf("\nInvalid inventory file data!\n");
+    *count = 0;
+    fclose(file);
+    return;
+}
+
+    // Load all inventory records
+    fread(inventory, sizeof(struct Inventory), *count, file);
+
+    fclose(file);
+
+    printf("\nInventory Loaded Successfully!\n");
+}
+
+// Function to save venue records
+void saveVenues(struct Venue venues[], int count)
+{
+    FILE *file = fopen("venues.dat", "wb");
+
+    if (file == NULL)
+    {
+        printf("\nError saving venues!\n");
+        return;
+    }
+
+    // Save venue count
+    fwrite(&count, sizeof(int), 1, file);
+
+    // Save all venue records
+    fwrite(venues, sizeof(struct Venue), count, file);
+
+    fclose(file);
+
+    printf("\nVenues Saved Successfully!\n");
+}
+
+// Function to load venue records
+void loadVenues(struct Venue venues[], int *count)
+{
+    FILE *file = fopen("venues.dat", "rb");
+
+    if (file == NULL)
+    {
+        printf("\nNo previous venue records found.\n");
+        return;
+    }
+
+    // Load venue count
+    fread(count, sizeof(int), 1, file);
+    if (*count < 0 || *count > 100) {
+    printf("\nInvalid venue file data!\n");
+    *count = 0;
+    fclose(file);
+    return;
+}
+
+    // Load all venue records
+    fread(venues, sizeof(struct Venue), *count, file);
+
+    fclose(file);
+
+    printf("\nVenues Loaded Successfully!\n");
+}
+
+// Function to save vendor records
+void saveVendors(struct Vendor vendors[], int count)
+{
+    FILE *file = fopen("vendors.dat", "wb");
+
+    if (file == NULL)
+    {
+        printf("\nError saving vendors!\n");
+        return;
+    }
+
+    // Save vendor count
+    fwrite(&count, sizeof(int), 1, file);
+
+    // Save all vendor records
+    fwrite(vendors, sizeof(struct Vendor), count, file);
+
+    fclose(file);
+
+    printf("\nVendors Saved Successfully!\n");
+}
+
+// Function to load vendor records
+void loadVendors(struct Vendor vendors[], int *count)
+{
+    FILE *file = fopen("vendors.dat", "rb");
+
+    if (file == NULL)
+    {
+        printf("\nNo previous vendor records found.\n");
+        return;
+    }
+
+    // Load vendor count
+    fread(count, sizeof(int), 1, file);
+    if (*count < 0 || *count > 100) {
+    printf("\nInvalid vendor file data!\n");
+    *count = 0;
+    fclose(file);
+    return;
+}
+
+    // Load all vendor records
+    fread(vendors, sizeof(struct Vendor), *count, file);
+
+    fclose(file);
+
+    printf("\nVendors Loaded Successfully!\n");
+}
+
+// Function to save payment records
+void savePayments(struct Payment payments[], int count)
+{
+    FILE *file = fopen("payments.dat", "wb");
+
+    if (file == NULL)
+    {
+        printf("\nError saving payments!\n");
+        return;
+    }
+
+    // Save payment count
+    fwrite(&count, sizeof(int), 1, file);
+
+    // Save all payment records
+    fwrite(payments, sizeof(struct Payment), count, file);
+
+    fclose(file);
+
+    printf("\nPayments Saved Successfully!\n");
+}
+
+// Function to load payment records
+void loadPayments(struct Payment payments[], int *count)
+{
+    FILE *file = fopen("payments.dat", "rb");
+
+    if (file == NULL)
+    {
+        printf("\nNo previous payment records found.\n");
+        return;
+    }
+
+    // Load payment count
+    fread(count, sizeof(int), 1, file);
+    if (*count < 0 || *count > 100) {
+    printf("\nInvalid payment file data!\n");
+    *count = 0;
+    fclose(file);
+    return;
+}
+
+    // Load all payment records
+    fread(payments, sizeof(struct Payment), *count, file);
+
+    fclose(file);
+
+    printf("\nPayments Loaded Successfully!\n");
+}
 
     
 int main() {
@@ -1178,6 +1620,14 @@ int main() {
     int vendorCount = 0;
     struct Payment payments[100];
     int paymentCount = 0;
+
+    // Load all previously saved records
+    loadEvents(events, &count);
+    loadClients(clients, &clientCount);
+    loadInventory(inventory, &inventoryCount);
+    loadVenues(venues, &venueCount);
+    loadVendors(vendors, &vendorCount);
+    loadPayments(payments, &paymentCount);
 
     int ch;
 
@@ -1360,6 +1810,12 @@ int main() {
 
 
             case 31:
+                saveEvents(events, count);
+                saveClients(clients, clientCount);
+                saveInventory(inventory, inventoryCount);
+                saveVenues(venues, venueCount);
+                saveVendors(vendors, vendorCount);
+                savePayments(payments, paymentCount);
                 printf("\nThank you for using our system!\n");
                 return 0; 
                 
