@@ -35,6 +35,25 @@ struct Venue {
     char availability[20];       // Availability status
     char contactNumber[20];      // Venue contact number
 };
+// Structure to store vendor information
+struct Vendor {
+    int vendorID;             // Unique ID of each vendor
+    char vendorName[50];      // Name of vendor or company
+    char serviceType[50];     // Service provided by vendor
+    char phone[20];           // Vendor contact number
+    char email[50];           // Vendor email address
+    float servicePrice;       // Price of the service
+};
+// Structure to store payment information
+struct Payment {
+    int paymentID;             // Unique payment ID
+    int eventID;               // Related event ID
+    int clientID;              // Related client ID
+    float totalAmount;         // Total event amount
+    float paidAmount;          // Amount already paid
+    char paymentDate[20];      // Date of payment
+    char paymentStatus[20];    // Payment status
+};
 
 void addEvent(struct Event events[], int *count) {
 
@@ -777,6 +796,370 @@ void deleteVenue(struct Venue venues[], int *venueCount)
         printf("\nVenue Not Found!\n");
     }
 }
+    // DOMAIN NO :5
+
+// Function to add a new vendor
+void addVendor(struct Vendor vendors[], int *vendorCount)
+{
+    // Take Vendor ID
+    printf("\nEnter Vendor ID: ");
+    scanf("%d", &vendors[*vendorCount].vendorID);
+
+    // Take Vendor Name
+    printf("Enter Vendor Name: ");
+    scanf(" %49[^\n]", vendors[*vendorCount].vendorName);
+
+    // Take Service Type
+    printf("Enter Service Type: ");
+    scanf(" %49[^\n]", vendors[*vendorCount].serviceType);
+
+    // Take Phone Number
+    printf("Enter Phone Number: ");
+    scanf(" %19[^\n]", vendors[*vendorCount].phone);
+
+    // Take Email
+    printf("Enter Email: ");
+    scanf(" %49[^\n]", vendors[*vendorCount].email);
+
+    // Take Service Price
+    printf("Enter Service Price: ");
+    scanf("%f", &vendors[*vendorCount].servicePrice);
+
+    // Increase vendor counter
+    (*vendorCount)++;
+
+    // Display success message
+    printf("\nVendor Added Successfully!\n");
+}
+
+// Function to display all vendors
+void displayVendors(struct Vendor vendors[], int vendorCount)
+{
+    // Check whether any vendor records exist
+    if (vendorCount == 0)
+    {
+        printf("\nNo Vendor Records Found!\n");
+        return;
+    }
+
+    // Display all vendor records
+    for (int i = 0; i < vendorCount; i++)
+    {
+        printf("\nVendor ID: %d", vendors[i].vendorID);
+        printf("\nVendor Name: %s", vendors[i].vendorName);
+        printf("\nService Type: %s", vendors[i].serviceType);
+        printf("\nPhone Number: %s", vendors[i].phone);
+        printf("\nEmail: %s", vendors[i].email);
+        printf("\nService Price: %.2f\n", vendors[i].servicePrice);
+    }
+}
+
+// Function to search for a vendor by ID
+void searchVendor(struct Vendor vendors[], int vendorCount)
+{
+    int id;
+    int found = 0;
+
+    // Ask the user for Vendor ID
+    printf("\nEnter Vendor ID to Search: ");
+    scanf("%d", &id);
+
+    // Search through all vendor records
+    for (int i = 0; i < vendorCount; i++)
+    {
+        if (vendors[i].vendorID == id)
+        {
+            // Display the matching vendor
+            printf("\nVendor Found!");
+            printf("\nVendor ID: %d", vendors[i].vendorID);
+            printf("\nVendor Name: %s", vendors[i].vendorName);
+            printf("\nService Type: %s", vendors[i].serviceType);
+            printf("\nPhone Number: %s", vendors[i].phone);
+            printf("\nEmail: %s", vendors[i].email);
+            printf("\nService Price: %.2f\n", vendors[i].servicePrice);
+
+            found = 1;
+            break;
+        }
+    }
+
+    // Display message if vendor was not found
+    if (found == 0)
+    {
+        printf("\nVendor Not Found!\n");
+    }
+}
+
+// Function to update vendor information
+void updateVendor(struct Vendor vendors[], int vendorCount)
+{
+    int id;
+    int found = 0;
+
+    // Ask for Vendor ID
+    printf("\nEnter Vendor ID to Update: ");
+    scanf("%d", &id);
+
+    // Search for the vendor
+    for (int i = 0; i < vendorCount; i++)
+    {
+        if (vendors[i].vendorID == id)
+        {
+            // Take updated vendor information
+            printf("\nEnter New Vendor Name: ");
+            scanf(" %49[^\n]", vendors[i].vendorName);
+
+            printf("Enter New Service Type: ");
+            scanf(" %49[^\n]", vendors[i].serviceType);
+
+            printf("Enter New Phone Number: ");
+            scanf(" %19[^\n]", vendors[i].phone);
+
+            printf("Enter New Email: ");
+            scanf(" %49[^\n]", vendors[i].email);
+
+            printf("Enter New Service Price: ");
+            scanf("%f", &vendors[i].servicePrice);
+
+            // Display success message
+            printf("\nVendor Updated Successfully!\n");
+
+            found = 1;
+            break;
+        }
+    }
+
+    // Check whether vendor was found
+    if (found == 0)
+    {
+        printf("\nVendor Not Found!\n");
+    }
+}
+
+// Function to delete a vendor
+void deleteVendor(struct Vendor vendors[], int *vendorCount)
+{
+    int id;
+    int found = 0;
+
+    // Ask for Vendor ID
+    printf("\nEnter Vendor ID to Delete: ");
+    scanf("%d", &id);
+
+    // Search for the vendor
+    for (int i = 0; i < *vendorCount; i++)
+    {
+        if (vendors[i].vendorID == id)
+        {
+            // Shift remaining records one position to the left
+            for (int j = i; j < *vendorCount - 1; j++)
+            {
+                vendors[j] = vendors[j + 1];
+            }
+
+            // Decrease vendor counter
+            (*vendorCount)--;
+
+            printf("\nVendor Deleted Successfully!\n");
+
+            found = 1;
+            break;
+        }
+    }
+
+    // Check whether vendor was found
+    if (found == 0)
+    {
+        printf("\nVendor Not Found!\n");
+    }
+}
+
+        // DOMAIN NO :6
+
+// Function to add a new payment
+void addPayment(struct Payment payments[], int *paymentCount)
+{
+    // Take Payment ID
+    printf("\nEnter Payment ID: ");
+    scanf("%d", &payments[*paymentCount].paymentID);
+
+    // Take Event ID
+    printf("Enter Event ID: ");
+    scanf("%d", &payments[*paymentCount].eventID);
+
+    // Take Client ID
+    printf("Enter Client ID: ");
+    scanf("%d", &payments[*paymentCount].clientID);
+
+    // Take Total Amount
+    printf("Enter Total Amount: ");
+    scanf("%f", &payments[*paymentCount].totalAmount);
+
+    // Take Paid Amount
+    printf("Enter Paid Amount: ");
+    scanf("%f", &payments[*paymentCount].paidAmount);
+
+    // Take Payment Date
+    printf("Enter Payment Date: ");
+    scanf(" %19[^\n]", payments[*paymentCount].paymentDate);
+
+    // Take Payment Status
+    printf("Enter Payment Status: ");
+    scanf(" %19[^\n]", payments[*paymentCount].paymentStatus);
+
+    // Increase payment counter
+    (*paymentCount)++;
+
+    // Display success message
+    printf("\nPayment Added Successfully!\n");
+}
+
+// Function to display all payment records
+void displayPayments(struct Payment payments[], int paymentCount)
+{
+    // Check whether payment records exist
+    if (paymentCount == 0)
+    {
+        printf("\nNo Payment Records Found!\n");
+        return;
+    }
+
+    // Display all payment records
+    for (int i = 0; i < paymentCount; i++)
+    {
+        printf("\nPayment ID: %d", payments[i].paymentID);
+        printf("\nEvent ID: %d", payments[i].eventID);
+        printf("\nClient ID: %d", payments[i].clientID);
+        printf("\nTotal Amount: %.2f", payments[i].totalAmount);
+        printf("\nPaid Amount: %.2f", payments[i].paidAmount);
+        printf("\nPayment Date: %s", payments[i].paymentDate);
+        printf("\nPayment Status: %s\n", payments[i].paymentStatus);
+    }
+}
+
+// Function to search for a payment by ID
+void searchPayment(struct Payment payments[], int paymentCount)
+{
+    int id;
+    int found = 0;
+
+    // Ask the user for Payment ID
+    printf("\nEnter Payment ID to Search: ");
+    scanf("%d", &id);
+
+    // Search through all payment records
+    for (int i = 0; i < paymentCount; i++)
+    {
+        if (payments[i].paymentID == id)
+        {
+            // Display the matching payment
+            printf("\nPayment Found!");
+            printf("\nPayment ID: %d", payments[i].paymentID);
+            printf("\nEvent ID: %d", payments[i].eventID);
+            printf("\nClient ID: %d", payments[i].clientID);
+            printf("\nTotal Amount: %.2f", payments[i].totalAmount);
+            printf("\nPaid Amount: %.2f", payments[i].paidAmount);
+            printf("\nPayment Date: %s", payments[i].paymentDate);
+            printf("\nPayment Status: %s\n", payments[i].paymentStatus);
+
+            found = 1;
+            break;
+        }
+    }
+
+    // Display message if payment was not found
+    if (found == 0)
+    {
+        printf("\nPayment Not Found!\n");
+    }
+}
+
+// Function to update payment information
+void updatePayment(struct Payment payments[], int paymentCount)
+{
+    int id;
+    int found = 0;
+
+    // Ask for Payment ID
+    printf("\nEnter Payment ID to Update: ");
+    scanf("%d", &id);
+
+    // Search for the payment
+    for (int i = 0; i < paymentCount; i++)
+    {
+        if (payments[i].paymentID == id)
+        {
+            // Take updated payment information
+            printf("\nEnter New Event ID: ");
+            scanf("%d", &payments[i].eventID);
+
+            printf("Enter New Client ID: ");
+            scanf("%d", &payments[i].clientID);
+
+            printf("Enter New Total Amount: ");
+            scanf("%f", &payments[i].totalAmount);
+
+            printf("Enter New Paid Amount: ");
+            scanf("%f", &payments[i].paidAmount);
+
+            printf("Enter New Payment Date: ");
+            scanf(" %19[^\n]", payments[i].paymentDate);
+
+            printf("Enter New Payment Status: ");
+            scanf(" %19[^\n]", payments[i].paymentStatus);
+
+            // Display success message
+            printf("\nPayment Updated Successfully!\n");
+
+            found = 1;
+            break;
+        }
+    }
+
+    // Check whether payment was found
+    if (found == 0)
+    {
+        printf("\nPayment Not Found!\n");
+    }
+}
+
+// Function to delete a payment
+void deletePayment(struct Payment payments[], int *paymentCount)
+{
+    int id;
+    int found = 0;
+
+    // Ask for Payment ID
+    printf("\nEnter Payment ID to Delete: ");
+    scanf("%d", &id);
+
+    // Search for the payment
+    for (int i = 0; i < *paymentCount; i++)
+    {
+        if (payments[i].paymentID == id)
+        {
+            // Shift remaining records one position to the left
+            for (int j = i; j < *paymentCount - 1; j++)
+            {
+                payments[j] = payments[j + 1];
+            }
+
+            // Decrease payment counter
+            (*paymentCount)--;
+
+            printf("\nPayment Deleted Successfully!\n");
+
+            found = 1;
+            break;
+        }
+    }
+
+    // Check whether payment was found
+    if (found == 0)
+    {
+        printf("\nPayment Not Found!\n");
+    }
+}
 
     
 int main() {
@@ -791,6 +1174,10 @@ int main() {
     int inventoryCount = 0;
     struct Venue venues[100];
     int venueCount = 0;
+    struct Vendor vendors[100];
+    int vendorCount = 0;
+    struct Payment payments[100];
+    int paymentCount = 0;
 
     int ch;
 
@@ -826,9 +1213,22 @@ int main() {
         printf("18. Search Venue\n");
         printf("19. Update Venue\n");
         printf("20. Delete Venue\n");
+        // Vendor Management Menu
+        printf("21. Add Vendor\n");
+        printf("22. Display Vendors\n");
+        printf("23. Search Vendor\n");
+        printf("24. Update Vendor\n");
+        printf("25. Delete Vendor\n");
+        // Payment Management Menu
+        printf("\n26. Add Payment");
+        printf("\n27. Display Payments");
+        printf("\n28. Search Payment");
+        printf("\n29. Update Payment");
+        printf("\n30. Delete Payment");
+        //exit
+        printf("31. Exit\n");
 
-        printf("21. Exit\n");
-
+        
         printf("\nEnter your choice: ");
         scanf("%d", &ch);
 
@@ -918,11 +1318,52 @@ int main() {
                 deleteVenue(venues, &venueCount);
                 break;
 
-
-            //exit program
             case 21:
-            printf("\nThank you for using Event Management System!\n");
-            return 0;
+                addVendor(vendors, &vendorCount);
+                break;
+
+            case 22:
+                displayVendors(vendors, vendorCount);
+                break;
+
+            case 23:
+                searchVendor(vendors, vendorCount);
+                break;
+
+            case 24:
+                updateVendor(vendors, vendorCount);
+                break;
+
+            case 25:
+                deleteVendor(vendors, &vendorCount);
+                break;
+
+            case 26:
+                addPayment(payments, &paymentCount);
+                break;
+
+            case 27:
+                displayPayments(payments, paymentCount);
+                break;
+
+            case 28:
+                searchPayment(payments, paymentCount);
+                break;
+
+            case 29:
+                updatePayment(payments, paymentCount);
+                break;
+
+            case 30:
+                deletePayment(payments, &paymentCount);
+                break;
+
+
+            case 31:
+                printf("\nThank you for using our system!\n");
+                return 0; 
+                
+                
             
             default:
                 printf("Invalid choice! Please try again.\n");
