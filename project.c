@@ -109,6 +109,7 @@ void addEvent(struct Event events[], int *count) {
 }
 
     printf("\nEvent added successfully!\n");
+    (*count)++;
 }
 
 // Function to display all stored events
@@ -1664,19 +1665,21 @@ int main() {
         printf("19. Update Venue\n");
         printf("20. Delete Venue\n");
         // Vendor Management Menu
+        printf("\n--- VENDOR MANAGEMENT ---\n");
         printf("21. Add Vendor\n");
         printf("22. Display Vendors\n");
         printf("23. Search Vendor\n");
         printf("24. Update Vendor\n");
         printf("25. Delete Vendor\n");
         // Payment Management Menu
+        printf("\n--- PAYMENT MANAGEMENT ---\n");
         printf("\n26. Add Payment");
         printf("\n27. Display Payments");
         printf("\n28. Search Payment");
         printf("\n29. Update Payment");
         printf("\n30. Delete Payment");
         //exit
-        printf("31. Exit\n");
+        printf("\n31. Exit\n");
 
         
         printf("\nEnter your choice: ");
