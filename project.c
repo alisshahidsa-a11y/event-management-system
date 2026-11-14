@@ -25,6 +25,16 @@ struct Inventory {
     int quantity;           // Available quantity
     float price;            // Price per item
 };
+// Structure to store venue information
+struct Venue {
+    int venueID;                 // Unique ID of each venue
+    char venueName[50];          // Name of the venue
+    char location[100];          // Venue location
+    int capacity;                // Maximum number of guests
+    float rentalPrice;           // Venue rental cost
+    char availability[20];       // Availability status
+    char contactNumber[20];      // Venue contact number
+};
 
 void addEvent(struct Event events[], int *count) {
 
@@ -568,9 +578,205 @@ void deleteInventory(struct Inventory inventory[], int *inventoryCount)
         printf("\nInventory Item Not Found!\n");
     }
 }
+        //DOMAIN NO: 4
 
+// Function to add a new venue
+void addVenue(struct Venue venues[], int *venueCount)
+{
+    // Take Venue ID from the user
+    printf("\nEnter Venue ID: ");
+    scanf("%d", &venues[*venueCount].venueID);
 
+    // Take Venue Name (including spaces)
+    printf("Enter Venue Name: ");
+    scanf(" %49[^\n]", venues[*venueCount].venueName);
 
+    // Take Venue Location
+    printf("Enter Venue Location: ");
+    scanf(" %99[^\n]", venues[*venueCount].location);
+
+    // Take maximum guest capacity
+    printf("Enter Venue Capacity: ");
+    scanf("%d", &venues[*venueCount].capacity);
+
+    // Take venue rental price
+    printf("Enter Rental Price: ");
+    scanf("%f", &venues[*venueCount].rentalPrice);
+
+    // Take venue availability status
+    printf("Enter Availability (Available/Booked): ");
+    scanf(" %19[^\n]", venues[*venueCount].availability);
+
+    // Take venue contact number
+    printf("Enter Contact Number: ");
+    scanf(" %19[^\n]", venues[*venueCount].contactNumber);
+
+    // Increase venue counter by one
+    (*venueCount)++;
+
+    // Display success message
+    printf("\nVenue Added Successfully!\n");
+}
+
+// Function to display all venue records
+void displayVenues(struct Venue venues[], int venueCount)
+{
+    // Check whether any venues have been added
+    if (venueCount == 0)
+    {
+        printf("\nNo venues available!\n");
+    }
+    else
+    {
+        // Loop through all stored venues
+        for (int i = 0; i < venueCount; i++)
+        {
+            printf("-----------------------------\n");
+
+            // Display venue information
+            printf("Venue ID: %d\n", venues[i].venueID);
+            printf("Venue Name: %s\n", venues[i].venueName);
+            printf("Location: %s\n", venues[i].location);
+            printf("Capacity: %d\n", venues[i].capacity);
+            printf("Rental Price: %.2f\n", venues[i].rentalPrice);
+            printf("Availability: %s\n", venues[i].availability);
+            printf("Contact Number: %s\n", venues[i].contactNumber);
+        }
+    }
+}
+
+// Function to search for a venue using Venue ID
+void searchVenue(struct Venue venues[], int venueCount)
+{
+    int searchID;
+    int found = 0;  // Flag to check whether venue exists
+
+    // Ask the user for Venue ID
+    printf("\nEnter Venue ID to search: ");
+    scanf("%d", &searchID);
+
+    // Search through all stored venues
+    for (int i = 0; i < venueCount; i++)
+    {
+        // Compare entered ID with stored Venue IDs
+        if (venues[i].venueID == searchID)
+        {
+            // Display the matching venue's details
+            printf("\nVenue Found!\n");
+            printf("Venue ID: %d\n", venues[i].venueID);
+            printf("Venue Name: %s\n", venues[i].venueName);
+            printf("Location: %s\n", venues[i].location);
+            printf("Capacity: %d\n", venues[i].capacity);
+            printf("Rental Price: %.2f\n", venues[i].rentalPrice);
+            printf("Availability: %s\n", venues[i].availability);
+            printf("Contact Number: %s\n", venues[i].contactNumber);
+
+            found = 1;  // Mark venue as found
+            break;      // Stop searching
+        }
+    }
+
+    // Display message if venue was not found
+    if (found == 0)
+    {
+        printf("\nVenue Not Found!\n");
+    }
+}
+
+// Function to update an existing venue
+void updateVenue(struct Venue venues[], int venueCount)
+{
+    int updateID;
+    int found = 0;  // Flag to check whether venue exists
+
+    // Ask for Venue ID to update
+    printf("\nEnter Venue ID to update: ");
+    scanf("%d", &updateID);
+
+    // Search for the venue
+    for (int i = 0; i < venueCount; i++)
+    {
+        // Check whether entered ID matches
+        if (venues[i].venueID == updateID)
+        {
+            printf("\nVenue Found! Enter New Details:\n");
+
+            // Update venue name
+            printf("Enter New Venue Name: ");
+            scanf(" %49[^\n]", venues[i].venueName);
+
+            // Update venue location
+            printf("Enter New Location: ");
+            scanf(" %99[^\n]", venues[i].location);
+
+            // Update venue capacity
+            printf("Enter New Capacity: ");
+            scanf("%d", &venues[i].capacity);
+
+            // Update venue rental price
+            printf("Enter New Rental Price: ");
+            scanf("%f", &venues[i].rentalPrice);
+
+            // Update venue availability
+            printf("Enter New Availability: ");
+            scanf(" %19[^\n]", venues[i].availability);
+
+            // Update venue contact number
+            printf("Enter New Contact Number: ");
+            scanf(" %19[^\n]", venues[i].contactNumber);
+
+            found = 1;  // Mark venue as found
+
+            printf("\nVenue Updated Successfully!\n");
+            break;  // Stop searching
+        }
+    }
+
+    // Display message if venue was not found
+    if (found == 0)
+    {
+        printf("\nVenue Not Found!\n");
+    }
+}
+
+// Function to delete a venue using Venue ID
+void deleteVenue(struct Venue venues[], int *venueCount)
+{
+    int deleteID;
+    int found = 0;  // Flag to check whether venue exists
+
+    // Ask the user for Venue ID to delete
+    printf("\nEnter Venue ID to delete: ");
+    scanf("%d", &deleteID);
+
+    // Search through all stored venues
+    for (int i = 0; i < *venueCount; i++)
+    {
+        // Check whether entered ID matches
+        if (venues[i].venueID == deleteID)
+        {
+            // Shift remaining records one position to the left
+            for (int j = i; j < *venueCount - 1; j++)
+            {
+                venues[j] = venues[j + 1];
+            }
+
+            // Decrease the original venue counter
+            (*venueCount)--;
+
+            found = 1;  // Mark venue as found
+
+            printf("\nVenue Deleted Successfully!\n");
+            break;  // Stop searching
+        }
+    }
+
+    // Display message if venue was not found
+    if (found == 0)
+    {
+        printf("\nVenue Not Found!\n");
+    }
+}
 
     
 int main() {
@@ -583,6 +789,8 @@ int main() {
     int clientCount = 0;
     struct Inventory inventory[100];
     int inventoryCount = 0;
+    struct Venue venues[100];
+    int venueCount = 0;
 
     int ch;
 
@@ -611,7 +819,15 @@ int main() {
         printf("13. Search Inventory Item\n");
         printf("14. Update Inventory Item\n");
         printf("15. Delete Inventory Item\n");
-        printf("16. Exit\n");
+        // Venue Management options
+        printf("\n--- VENUE MANAGEMENT ---\n");
+        printf("16. Add Venue\n");
+        printf("17. Display All Venues\n");
+        printf("18. Search Venue\n");
+        printf("19. Update Venue\n");
+        printf("20. Delete Venue\n");
+
+        printf("21. Exit\n");
 
         printf("\nEnter your choice: ");
         scanf("%d", &ch);
@@ -680,9 +896,31 @@ int main() {
                 deleteInventory(inventory, &inventoryCount);
                 break;
 
+            // Venue Management
+
+            case 16:
+                addVenue(venues, &venueCount);
+                break;
+
+            case 17:
+                displayVenues(venues, venueCount);
+                break;
+
+            case 18:
+                searchVenue(venues, venueCount);
+                break;
+
+            case 19:
+                updateVenue(venues, venueCount);
+                break;
+
+            case 20:
+                deleteVenue(venues, &venueCount);
+                break;
+
 
             //exit program
-            case 16:
+            case 21:
             printf("\nThank you for using Event Management System!\n");
             return 0;
             
