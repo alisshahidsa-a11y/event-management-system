@@ -663,427 +663,8 @@ void deleteInventory(struct Inventory inventory[], int *inventoryCount)
         printf("\nInventory Item Not Found!\n");
     }
 }
-        //DOMAIN NO: 4
 
-// Function to add a new venue
-void addVenue(struct Venue venues[], int *venueCount)
-{
-    if (*venueCount >= 100) {
-    printf("\nMaximum venue limit reached!\n");
-    return;
-}
-    int newID;
-
-    printf("\nEnter Venue ID: ");
-    scanf("%d", &newID);
-
-    // Check for duplicate Venue ID
-    for (int i = 0; i < *venueCount; i++) {
-        if (venues[i].venueID == newID) {
-            printf("\nThis Venue ID already exists!\n");
-            return;
-        }
-    }
-
-    venues[*venueCount].venueID = newID;
-
-    // Take Venue Name (including spaces)
-    printf("Enter Venue Name: ");
-    scanf(" %49[^\n]", venues[*venueCount].venueName);
-
-    // Take Venue Location
-    printf("Enter Venue Location: ");
-    scanf(" %99[^\n]", venues[*venueCount].location);
-
-    // Take maximum guest capacity
-    printf("Enter Venue Capacity: ");
-    scanf("%d", &venues[*venueCount].capacity);
-    
-    if (venues[*venueCount].capacity <= 0) 
-    {
-    printf("\nVenue capacity must be greater than zero!\n");
-    return;
-}
-
-    // Take venue rental price
-    printf("Enter Rental Price: ");
-    scanf("%f", &venues[*venueCount].rentalPrice);
-    if (venues[*venueCount].rentalPrice < 0) {
-    printf("\nRental price cannot be negative!\n");
-    return;
-}
-
-    // Take venue availability status
-    printf("Enter Availability (Available/Booked): ");
-    scanf(" %19[^\n]", venues[*venueCount].availability);
-
-    // Take venue contact number
-    printf("Enter Contact Number: ");
-    scanf(" %19[^\n]", venues[*venueCount].contactNumber);
-
-    // Increase venue counter by one
-    (*venueCount)++;
-
-    // Display success message
-    printf("\nVenue Added Successfully!\n");
-}
-
-// Function to display all venue records
-void displayVenues(struct Venue venues[], int venueCount)
-{
-    // Check whether any venues have been added
-    if (venueCount == 0)
-    {
-        printf("\nNo venues available!\n");
-    }
-    else
-    {
-        // Loop through all stored venues
-        for (int i = 0; i < venueCount; i++)
-        {
-            printf("-----------------------------\n");
-
-            // Display venue information
-            printf("Venue ID: %d\n", venues[i].venueID);
-            printf("Venue Name: %s\n", venues[i].venueName);
-            printf("Location: %s\n", venues[i].location);
-            printf("Capacity: %d\n", venues[i].capacity);
-            printf("Rental Price: %.2f\n", venues[i].rentalPrice);
-            printf("Availability: %s\n", venues[i].availability);
-            printf("Contact Number: %s\n", venues[i].contactNumber);
-        }
-    }
-}
-
-// Function to search for a venue using Venue ID
-void searchVenue(struct Venue venues[], int venueCount)
-{
-    int searchID;
-    int found = 0;  // Flag to check whether venue exists
-
-    // Ask the user for Venue ID
-    printf("\nEnter Venue ID to search: ");
-    scanf("%d", &searchID);
-
-    // Search through all stored venues
-    for (int i = 0; i < venueCount; i++)
-    {
-        // Compare entered ID with stored Venue IDs
-        if (venues[i].venueID == searchID)
-        {
-            // Display the matching venue's details
-            printf("\nVenue Found!\n");
-            printf("Venue ID: %d\n", venues[i].venueID);
-            printf("Venue Name: %s\n", venues[i].venueName);
-            printf("Location: %s\n", venues[i].location);
-            printf("Capacity: %d\n", venues[i].capacity);
-            printf("Rental Price: %.2f\n", venues[i].rentalPrice);
-            printf("Availability: %s\n", venues[i].availability);
-            printf("Contact Number: %s\n", venues[i].contactNumber);
-
-            found = 1;  // Mark venue as found
-            break;      // Stop searching
-        }
-    }
-
-    // Display message if venue was not found
-    if (found == 0)
-    {
-        printf("\nVenue Not Found!\n");
-    }
-}
-
-// Function to update an existing venue
-void updateVenue(struct Venue venues[], int venueCount)
-{
-    int updateID;
-    int found = 0;  // Flag to check whether venue exists
-
-    // Ask for Venue ID to update
-    printf("\nEnter Venue ID to update: ");
-    scanf("%d", &updateID);
-
-    // Search for the venue
-    for (int i = 0; i < venueCount; i++)
-    {
-        // Check whether entered ID matches
-        if (venues[i].venueID == updateID)
-        {
-            printf("\nVenue Found! Enter New Details:\n");
-
-            // Update venue name
-            printf("Enter New Venue Name: ");
-            scanf(" %49[^\n]", venues[i].venueName);
-
-            // Update venue location
-            printf("Enter New Location: ");
-            scanf(" %99[^\n]", venues[i].location);
-
-            // Update venue capacity
-            printf("Enter New Capacity: ");
-            scanf("%d", &venues[i].capacity);
-
-            // Update venue rental price
-            printf("Enter New Rental Price: ");
-            scanf("%f", &venues[i].rentalPrice);
-
-            // Update venue availability
-            printf("Enter New Availability: ");
-            scanf(" %19[^\n]", venues[i].availability);
-
-            // Update venue contact number
-            printf("Enter New Contact Number: ");
-            scanf(" %19[^\n]", venues[i].contactNumber);
-
-            found = 1;  // Mark venue as found
-
-            printf("\nVenue Updated Successfully!\n");
-            break;  // Stop searching
-        }
-    }
-
-    // Display message if venue was not found
-    if (found == 0)
-    {
-        printf("\nVenue Not Found!\n");
-    }
-}
-
-// Function to delete a venue using Venue ID
-void deleteVenue(struct Venue venues[], int *venueCount)
-{
-    int deleteID;
-    int found = 0;  // Flag to check whether venue exists
-
-    // Ask the user for Venue ID to delete
-    printf("\nEnter Venue ID to delete: ");
-    scanf("%d", &deleteID);
-
-    // Search through all stored venues
-    for (int i = 0; i < *venueCount; i++)
-    {
-        // Check whether entered ID matches
-        if (venues[i].venueID == deleteID)
-        {
-            // Shift remaining records one position to the left
-            for (int j = i; j < *venueCount - 1; j++)
-            {
-                venues[j] = venues[j + 1];
-            }
-
-            // Decrease the original venue counter
-            (*venueCount)--;
-
-            found = 1;  // Mark venue as found
-
-            printf("\nVenue Deleted Successfully!\n");
-            break;  // Stop searching
-        }
-    }
-
-    // Display message if venue was not found
-    if (found == 0)
-    {
-        printf("\nVenue Not Found!\n");
-    }
-}
-    // DOMAIN NO :5
-
-// Function to add a new vendor
-void addVendor(struct Vendor vendors[], int *vendorCount)
-{
-    if (*vendorCount >= 100) {
-    printf("\nMaximum vendor limit reached!\n");
-    return;
-}
-    int newID;
-
-    printf("\nEnter Vendor ID: ");
-    scanf("%d", &newID);
-
-    // Check for duplicate Vendor ID
-    for (int i = 0; i < *vendorCount; i++) {
-        if (vendors[i].vendorID == newID) {
-            printf("\nThis Vendor ID already exists!\n");
-            return;
-        }
-    }
-
-vendors[*vendorCount].vendorID = newID;
-    // Take Vendor Name
-    printf("Enter Vendor Name: ");
-    scanf(" %49[^\n]", vendors[*vendorCount].vendorName);
-
-    // Take Service Type
-    printf("Enter Service Type: ");
-    scanf(" %49[^\n]", vendors[*vendorCount].serviceType);
-
-    // Take Phone Number
-    printf("Enter Phone Number: ");
-    scanf(" %19[^\n]", vendors[*vendorCount].phone);
-
-    // Take Email
-    printf("Enter Email: ");
-    scanf(" %49[^\n]", vendors[*vendorCount].email);
-
-    // Take Service Price
-    printf("Enter Service Price: ");
-    scanf("%f", &vendors[*vendorCount].servicePrice);
-    if (vendors[*vendorCount].servicePrice < 0) {
-    printf("\nService price cannot be negative!\n");
-    return;
-}
-
-    // Increase vendor counter
-    (*vendorCount)++;
-
-    // Display success message
-    printf("\nVendor Added Successfully!\n");
-}
-
-// Function to display all vendors
-void displayVendors(struct Vendor vendors[], int vendorCount)
-{
-    // Check whether any vendor records exist
-    if (vendorCount == 0)
-    {
-        printf("\nNo Vendor Records Found!\n");
-        return;
-    }
-
-    // Display all vendor records
-    for (int i = 0; i < vendorCount; i++)
-    {
-        printf("\nVendor ID: %d", vendors[i].vendorID);
-        printf("\nVendor Name: %s", vendors[i].vendorName);
-        printf("\nService Type: %s", vendors[i].serviceType);
-        printf("\nPhone Number: %s", vendors[i].phone);
-        printf("\nEmail: %s", vendors[i].email);
-        printf("\nService Price: %.2f\n", vendors[i].servicePrice);
-    }
-}
-
-// Function to search for a vendor by ID
-void searchVendor(struct Vendor vendors[], int vendorCount)
-{
-    int id;
-    int found = 0;
-
-    // Ask the user for Vendor ID
-    printf("\nEnter Vendor ID to Search: ");
-    scanf("%d", &id);
-
-    // Search through all vendor records
-    for (int i = 0; i < vendorCount; i++)
-    {
-        if (vendors[i].vendorID == id)
-        {
-            // Display the matching vendor
-            printf("\nVendor Found!");
-            printf("\nVendor ID: %d", vendors[i].vendorID);
-            printf("\nVendor Name: %s", vendors[i].vendorName);
-            printf("\nService Type: %s", vendors[i].serviceType);
-            printf("\nPhone Number: %s", vendors[i].phone);
-            printf("\nEmail: %s", vendors[i].email);
-            printf("\nService Price: %.2f\n", vendors[i].servicePrice);
-
-            found = 1;
-            break;
-        }
-    }
-
-    // Display message if vendor was not found
-    if (found == 0)
-    {
-        printf("\nVendor Not Found!\n");
-    }
-}
-
-// Function to update vendor information
-void updateVendor(struct Vendor vendors[], int vendorCount)
-{
-    int id;
-    int found = 0;
-
-    // Ask for Vendor ID
-    printf("\nEnter Vendor ID to Update: ");
-    scanf("%d", &id);
-
-    // Search for the vendor
-    for (int i = 0; i < vendorCount; i++)
-    {
-        if (vendors[i].vendorID == id)
-        {
-            // Take updated vendor information
-            printf("\nEnter New Vendor Name: ");
-            scanf(" %49[^\n]", vendors[i].vendorName);
-
-            printf("Enter New Service Type: ");
-            scanf(" %49[^\n]", vendors[i].serviceType);
-
-            printf("Enter New Phone Number: ");
-            scanf(" %19[^\n]", vendors[i].phone);
-
-            printf("Enter New Email: ");
-            scanf(" %49[^\n]", vendors[i].email);
-
-            printf("Enter New Service Price: ");
-            scanf("%f", &vendors[i].servicePrice);
-
-            // Display success message
-            printf("\nVendor Updated Successfully!\n");
-
-            found = 1;
-            break;
-        }
-    }
-
-    // Check whether vendor was found
-    if (found == 0)
-    {
-        printf("\nVendor Not Found!\n");
-    }
-}
-
-// Function to delete a vendor
-void deleteVendor(struct Vendor vendors[], int *vendorCount)
-{
-    int id;
-    int found = 0;
-
-    // Ask for Vendor ID
-    printf("\nEnter Vendor ID to Delete: ");
-    scanf("%d", &id);
-
-    // Search for the vendor
-    for (int i = 0; i < *vendorCount; i++)
-    {
-        if (vendors[i].vendorID == id)
-        {
-            // Shift remaining records one position to the left
-            for (int j = i; j < *vendorCount - 1; j++)
-            {
-                vendors[j] = vendors[j + 1];
-            }
-
-            // Decrease vendor counter
-            (*vendorCount)--;
-
-            printf("\nVendor Deleted Successfully!\n");
-
-            found = 1;
-            break;
-        }
-    }
-
-    // Check whether vendor was found
-    if (found == 0)
-    {
-        printf("\nVendor Not Found!\n");
-    }
-}
-
-        // DOMAIN NO :6
+        // DOMAIN NO :4
 
 // Function to add a new payment
 void addPayment(struct Payment payments[], int *paymentCount)
@@ -1454,105 +1035,6 @@ void loadInventory(struct Inventory inventory[], int *count)
     printf("\nInventory Loaded Successfully!\n");
 }
 
-// Function to save venue records
-void saveVenues(struct Venue venues[], int count)
-{
-    FILE *file = fopen("venues.dat", "wb");
-
-    if (file == NULL)
-    {
-        printf("\nError saving venues!\n");
-        return;
-    }
-
-    // Save venue count
-    fwrite(&count, sizeof(int), 1, file);
-
-    // Save all venue records
-    fwrite(venues, sizeof(struct Venue), count, file);
-
-    fclose(file);
-
-    printf("\nVenues Saved Successfully!\n");
-}
-
-// Function to load venue records
-void loadVenues(struct Venue venues[], int *count)
-{
-    FILE *file = fopen("venues.dat", "rb");
-
-    if (file == NULL)
-    {
-        printf("\nNo previous venue records found.\n");
-        return;
-    }
-
-    // Load venue count
-    fread(count, sizeof(int), 1, file);
-    if (*count < 0 || *count > 100) {
-    printf("\nInvalid venue file data!\n");
-    *count = 0;
-    fclose(file);
-    return;
-}
-
-    // Load all venue records
-    fread(venues, sizeof(struct Venue), *count, file);
-
-    fclose(file);
-
-    printf("\nVenues Loaded Successfully!\n");
-}
-
-// Function to save vendor records
-void saveVendors(struct Vendor vendors[], int count)
-{
-    FILE *file = fopen("vendors.dat", "wb");
-
-    if (file == NULL)
-    {
-        printf("\nError saving vendors!\n");
-        return;
-    }
-
-    // Save vendor count
-    fwrite(&count, sizeof(int), 1, file);
-
-    // Save all vendor records
-    fwrite(vendors, sizeof(struct Vendor), count, file);
-
-    fclose(file);
-
-    printf("\nVendors Saved Successfully!\n");
-}
-
-// Function to load vendor records
-void loadVendors(struct Vendor vendors[], int *count)
-{
-    FILE *file = fopen("vendors.dat", "rb");
-
-    if (file == NULL)
-    {
-        printf("\nNo previous vendor records found.\n");
-        return;
-    }
-
-    // Load vendor count
-    fread(count, sizeof(int), 1, file);
-    if (*count < 0 || *count > 100) {
-    printf("\nInvalid vendor file data!\n");
-    *count = 0;
-    fclose(file);
-    return;
-}
-
-    // Load all vendor records
-    fread(vendors, sizeof(struct Vendor), *count, file);
-
-    fclose(file);
-
-    printf("\nVendors Loaded Successfully!\n");
-}
 
 // Function to save payment records
 void savePayments(struct Payment payments[], int count)
@@ -1615,10 +1097,6 @@ int main() {
     int clientCount = 0;
     struct Inventory inventory[100];
     int inventoryCount = 0;
-    struct Venue venues[100];
-    int venueCount = 0;
-    struct Vendor vendors[100];
-    int vendorCount = 0;
     struct Payment payments[100];
     int paymentCount = 0;
 
@@ -1626,8 +1104,6 @@ int main() {
     loadEvents(events, &count);
     loadClients(clients, &clientCount);
     loadInventory(inventory, &inventoryCount);
-    loadVenues(venues, &venueCount);
-    loadVendors(vendors, &vendorCount);
     loadPayments(payments, &paymentCount);
 
     int ch;
@@ -1657,29 +1133,15 @@ int main() {
         printf("13. Search Inventory Item\n");
         printf("14. Update Inventory Item\n");
         printf("15. Delete Inventory Item\n");
-        // Venue Management options
-        printf("\n--- VENUE MANAGEMENT ---\n");
-        printf("16. Add Venue\n");
-        printf("17. Display All Venues\n");
-        printf("18. Search Venue\n");
-        printf("19. Update Venue\n");
-        printf("20. Delete Venue\n");
-        // Vendor Management Menu
-        printf("\n--- VENDOR MANAGEMENT ---\n");
-        printf("21. Add Vendor\n");
-        printf("22. Display Vendors\n");
-        printf("23. Search Vendor\n");
-        printf("24. Update Vendor\n");
-        printf("25. Delete Vendor\n");
         // Payment Management Menu
         printf("\n--- PAYMENT MANAGEMENT ---\n");
-        printf("\n26. Add Payment");
-        printf("\n27. Display Payments");
-        printf("\n28. Search Payment");
-        printf("\n29. Update Payment");
-        printf("\n30. Delete Payment");
+        printf("16. Add Payment\n");
+        printf("17. Display Payments\n");
+        printf("18. Search Payment\n");
+        printf("19. Update Payment\n");
+        printf("20. Delete Payment\n");
         //exit
-        printf("\n31. Exit\n");
+        printf("\n21. Exit\n");
 
         
         printf("\nEnter your choice: ");
@@ -1749,75 +1211,32 @@ int main() {
                 deleteInventory(inventory, &inventoryCount);
                 break;
 
-            // Venue Management
 
             case 16:
-                addVenue(venues, &venueCount);
-                break;
-
-            case 17:
-                displayVenues(venues, venueCount);
-                break;
-
-            case 18:
-                searchVenue(venues, venueCount);
-                break;
-
-            case 19:
-                updateVenue(venues, venueCount);
-                break;
-
-            case 20:
-                deleteVenue(venues, &venueCount);
-                break;
-
-            case 21:
-                addVendor(vendors, &vendorCount);
-                break;
-
-            case 22:
-                displayVendors(vendors, vendorCount);
-                break;
-
-            case 23:
-                searchVendor(vendors, vendorCount);
-                break;
-
-            case 24:
-                updateVendor(vendors, vendorCount);
-                break;
-
-            case 25:
-                deleteVendor(vendors, &vendorCount);
-                break;
-
-            case 26:
                 addPayment(payments, &paymentCount);
                 break;
 
-            case 27:
+            case 17:
                 displayPayments(payments, paymentCount);
                 break;
 
-            case 28:
+            case 18:
                 searchPayment(payments, paymentCount);
                 break;
 
-            case 29:
+            case 19:
                 updatePayment(payments, paymentCount);
                 break;
 
-            case 30:
+            case 20:
                 deletePayment(payments, &paymentCount);
                 break;
 
 
-            case 31:
+            case 21:
                 saveEvents(events, count);
                 saveClients(clients, clientCount);
                 saveInventory(inventory, inventoryCount);
-                saveVenues(venues, venueCount);
-                saveVendors(vendors, vendorCount);
                 savePayments(payments, paymentCount);
                 printf("\nThank you for using our system!\n");
                 return 0; 
