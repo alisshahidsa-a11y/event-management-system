@@ -25,25 +25,7 @@ struct Inventory {
     int quantity;           // Available quantity
     float price;            // Price per item
 };
-// Structure to store venue information
-struct Venue {
-    int venueID;                 // Unique ID of each venue
-    char venueName[50];          // Name of the venue
-    char location[100];          // Venue location
-    int capacity;                // Maximum number of guests
-    float rentalPrice;           // Venue rental cost
-    char availability[20];       // Availability status
-    char contactNumber[20];      // Venue contact number
-};
-// Structure to store vendor information
-struct Vendor {
-    int vendorID;             // Unique ID of each vendor
-    char vendorName[50];      // Name of vendor or company
-    char serviceType[50];     // Service provided by vendor
-    char phone[20];           // Vendor contact number
-    char email[50];           // Vendor email address
-    float servicePrice;       // Price of the service
-};
+
 // Structure to store payment information
 struct Payment {
     int paymentID;             // Unique payment ID
