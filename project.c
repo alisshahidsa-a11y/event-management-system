@@ -10,6 +10,7 @@ struct Event {
     int guestCount;
     float budget;
 };
+//DOMAIN NO :2
 struct Client {
     int clientID;
     char clientName[50];
@@ -17,6 +18,7 @@ struct Client {
     char email[50];
     char address[100];
 };
+//DOMAIN NO :3
 // Structure to store inventory item information
 struct Inventory {
     int itemID;             // Unique ID of each item
@@ -25,7 +27,7 @@ struct Inventory {
     int quantity;           // Available quantity
     float price;            // Price per item
 };
-
+//DOMAIN NO :4
 // Structure to store payment information
 struct Payment {
     int paymentID;             // Unique payment ID
@@ -36,7 +38,7 @@ struct Payment {
     char paymentDate[20];      // Date of payment
     char paymentStatus[20];    // Payment status
 };
-
+//DOMAIN NO :1
 void addEvent(struct Event events[], int *count) {
     // Check whether the array is full
     if (*count >= 100) {
@@ -246,13 +248,15 @@ void deleteEvent(struct Event events[], int *count) {
             break;
         }
     }
-           //DOMAIN NO : 2
+           
 
     // Check if Event ID was found
     if (found == 0) {
         printf("\nEvent Not Found!\n");
     }
 }
+
+//DOMAIN NO : 2
 // Function to add a new client
 void addClient(struct Client clients[], int *clientCount){
     if (*clientCount >= 100) {
@@ -858,7 +862,8 @@ void deletePayment(struct Payment payments[], int *paymentCount)
         printf("\nPayment Not Found!\n");
     }
 }
-        // file handling 
+        // FILE HANDLING 
+
  // Function to save event records in a file
 void saveEvents(struct Event events[], int count)
 {
@@ -1097,11 +1102,11 @@ int main() {
 
     int ch;
 
-    // Repeat menu until user chooses Exit
+    // Repeat menu until user chooses Exit (MAKING LOOP INFINITE)
     while (1) {
 
         printf("==============================\n");
-        printf("       EVENT MANAGEMENT       \n");
+        printf("*  *   EVENT MANAGEMENT   *  *\n");
         printf("==============================\n");
 
         printf("1. Add Event\n");
@@ -1138,7 +1143,7 @@ int main() {
 
         // Perform operation according to user's choice
         switch (ch) {
-
+            //DOMAIN NO 1
             case 1:
                 addEvent(events, &count);
                 break;
@@ -1158,7 +1163,7 @@ int main() {
             case 5:
                 deleteEvent(events, &count);
                 break;
-
+            //DOMAIN NO 2
             case 6:
                 addClient(clients, &clientCount);
                 break;
@@ -1179,7 +1184,7 @@ int main() {
             case 10:
                 deleteClient(clients, &clientCount);
                 break;
-
+            //DOMAIN NO 3
             case 11:
                 addInventory(inventory, &inventoryCount);
                 break;
@@ -1199,8 +1204,7 @@ int main() {
             case 15:
                 deleteInventory(inventory, &inventoryCount);
                 break;
-
-
+            //DOMAIN NO 4
             case 16:
                 addPayment(payments, &paymentCount);
                 break;
@@ -1231,11 +1235,11 @@ int main() {
                 return 0; 
                 
                 
-            // if all the logic fails this all will given
+            // if all the logic fails this will given
             default:
                 printf("Invalid choice! Please try again.\n");
         }
     }
-
+ // END OF THE FUNCTION 
     return 0;
 }
