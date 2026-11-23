@@ -593,7 +593,7 @@ void updateInventory(struct Inventory inventory[], int inventoryCount)
             // Update item price
             printf("Enter New Price: ");
             scanf("%f", &inventory[i].price);
-
+            //flag updated
             found = 1;  // Mark item as found
 
             printf("\nInventory Item Updated Successfully!\n");
@@ -631,7 +631,7 @@ void deleteInventory(struct Inventory inventory[], int *inventoryCount)
 
             // Decrease the original inventory counter
             (*inventoryCount)--;
-
+            //flag updated
             found = 1;  // Mark item as found
 
             printf("\nInventory Item Deleted Successfully!\n");
@@ -758,7 +758,7 @@ void searchPayment(struct Payment payments[], int paymentCount)
             printf("\nPaid Amount: %.2f", payments[i].paidAmount);
             printf("\nPayment Date: %s", payments[i].paymentDate);
             printf("\nPayment Status: %s\n", payments[i].paymentStatus);
-
+            //flag updated
             found = 1;
             break;
         }
@@ -807,7 +807,7 @@ void updatePayment(struct Payment payments[], int paymentCount)
 
             // Display success message
             printf("\nPayment Updated Successfully!\n");
-
+            //flag updated
             found = 1;
             break;
         }
@@ -824,6 +824,7 @@ void updatePayment(struct Payment payments[], int paymentCount)
 void deletePayment(struct Payment payments[], int *paymentCount)
 {
     int id;
+
     int found = 0;
 
     // Ask for Payment ID
@@ -845,7 +846,7 @@ void deletePayment(struct Payment payments[], int *paymentCount)
             (*paymentCount)--;
 
             printf("\nPayment Deleted Successfully!\n");
-
+            //flag updated
             found = 1;
             break;
         }
@@ -943,7 +944,7 @@ void saveClients(struct Client clients[], int count)
 void loadClients(struct Client clients[], int *count)
 {
     FILE *file = fopen("clients.dat", "rb");
-
+ //if file doesnot open due to any reason
     if (file == NULL)
     {
         printf("\nNo previous client records found.\n");
@@ -971,7 +972,7 @@ void loadClients(struct Client clients[], int *count)
 void saveInventory(struct Inventory inventory[], int count)
 {
     FILE *file = fopen("inventory.dat", "wb");
-
+ //if file doesnot open due to any reason
     if (file == NULL)
     {
         printf("\nError saving inventory!\n");
@@ -993,7 +994,7 @@ void saveInventory(struct Inventory inventory[], int count)
 void loadInventory(struct Inventory inventory[], int *count)
 {
     FILE *file = fopen("inventory.dat", "rb");
-
+ //if file doesnot open due to any reason
     if (file == NULL)
     {
         printf("\nNo previous inventory records found.\n");
@@ -1022,7 +1023,7 @@ void loadInventory(struct Inventory inventory[], int *count)
 void savePayments(struct Payment payments[], int count)
 {
     FILE *file = fopen("payments.dat", "wb");
-
+ //if file doesnot open due to any reason
     if (file == NULL)
     {
         printf("\nError saving payments!\n");
@@ -1043,8 +1044,8 @@ void savePayments(struct Payment payments[], int count)
 // Function to load payment records
 void loadPayments(struct Payment payments[], int *count)
 {
-    FILE *file = fopen("payments.dat", "rb");
-
+    FILE *file = fopen("payments.dat", "rb"); //file reading
+    //if file doesnot open due to any reason
     if (file == NULL)
     {
         printf("\nNo previous payment records found.\n");
@@ -1075,11 +1076,17 @@ int main() {
     struct Event events[100];
     // Initially, no events are stored
     int count = 0;
+      // Array to store maximum 100 events
     struct Client clients[100];
+    // Initially, no events are stored
     int clientCount = 0;
+      // Array to store maximum 100 events
     struct Inventory inventory[100];
+    // Initially, no events are stored
     int inventoryCount = 0;
+      // Array to store maximum 100 events
     struct Payment payments[100];
+    // Initially, no events are stored
     int paymentCount = 0;
 
     // Load all previously saved records
@@ -1125,7 +1132,7 @@ int main() {
         //exit
         printf("\n21. Exit\n");
 
-        
+        //choice taken from the user 
         printf("\nEnter your choice: ");
         scanf("%d", &ch);
 
@@ -1214,7 +1221,7 @@ int main() {
                 deletePayment(payments, &paymentCount);
                 break;
 
-
+            // exit and save all the records 
             case 21:
                 saveEvents(events, count);
                 saveClients(clients, clientCount);
@@ -1224,7 +1231,7 @@ int main() {
                 return 0; 
                 
                 
-            
+            // if all the logic fails this all will given
             default:
                 printf("Invalid choice! Please try again.\n");
         }
@@ -1232,10 +1239,3 @@ int main() {
 
     return 0;
 }
-
-
-    
-
-
-
-    
